@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char * argv[])
+{
+    FILE * fp;
+    FILE * fpUPPER;
+    int i = 0;
+    char ch = '\0', chU = '\0';
+
+    fp = fopen(argv[1], "rw");
+
+    switch (argc) {
+        case (1):
+            printf("opening with stdin");
+            fp = stdin;
+            break;
+
+        case (2):
+            if (fp == NULL) {
+                printf("Cannot find file, please try again");
+                exit(EXIT_FAILURE);
+            }
+            else {
+                printf("writing uppercase file now...\n");
+                fpUPPER = fopen("somefileUPPER.txt", "w");
+                while (ch != EOF) {
+                    ch = fgetc(fp);
+                    chU = toupper(ch);
+                    fputc(chU, fpUPPER);
+                    printf(".");
+                }
+                printf("\ndone!");
+            }
+            break;
+        default:
+        printf("An error has occured, please try again later.");
+    }
+
+    fclose(fp);
+
+
+    return 0;
+}
